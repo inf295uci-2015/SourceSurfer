@@ -1,6 +1,5 @@
 package org.spideruci.analysis.statik.sourcecode;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -17,8 +16,13 @@ public class SourceSurfer {
   
   public static void main(String[] args) {
     String sourcePath = args[0];
+    File sourceDirectory = new File(sourcePath);
+    checkDirPath(sourcePath, sourceDirectory, 1);
+    String jsonRepositoryPath = args[1];
+    File jsonRepository = new File(jsonRepositoryPath);
+    checkDirPath(jsonRepositoryPath, jsonRepository, 2);
     
-    Navigator sourceNavigator = Navigator.init(new File(sourcePath));
+    Navigator sourceNavigator = Navigator.init(sourceDirectory);
     while(true) {
       File file = sourceNavigator.next();
       if(file == null) break;
@@ -26,15 +30,33 @@ public class SourceSurfer {
       System.out.println(className);
       SourceLine[] lines = getFileLines(file);
       SourceFileData source = new SourceFileData(className, lines);
-      spitJson(source);
+      spitJson(source, jsonRepository);
+    }
+  }
+
+  private static void checkDirPath(String repoPath, File repository, 
+      int argNumber) {
+    if(!repository.exists() && !repository.mkdir()) {
+      System.err.printf("Creation of Json Repository {path: %s} failed!\n", 
+          repoPath);
+      System.exit(1);
+    }
+    
+    if(!repository.isDirectory()) {
+      System.err.printf("ERROR: Json Repository isn't a path to a directory.\n"
+          + "(arg %d: %s)", argNumber, repository);
+      System.exit(1);
     }
   }
   
-  private static void spitJson(SourceFileData source) {
-    String json = JsonWriter.objectToJson(source);
-    File file = new File(source.className + ".json");
+  private static void spitJson(SourceFileData source, File jsonRepository) {
+    final String message = String.format("The json repository is not a direcotry. {path: %s}", jsonRepository.getAbsolutePath());
+    assert jsonRepository.isDirectory() : message;
+    
+    File sourceJson = new File(jsonRepository, source.className + ".json");
     try {
-      FileWriter filewriter = new FileWriter(file);
+      FileWriter filewriter = new FileWriter(sourceJson);
+      String json = JsonWriter.objectToJson(source);
       JsonWriter.writeJsonUtf8String(json, filewriter);
       filewriter.flush();
       filewriter.close();
