@@ -1,0 +1,2 @@
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourcePrinter
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourceJsonifier
