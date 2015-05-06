@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.InvalidObjectException;
 import java.util.Scanner;
 
+import org.spideruci.analysis.statik.sourcecode.models.SourceLine;
+
 public class SourcefileSurfer {
   
   final private File sourcefile;

@@ -1,4 +1,4 @@
-package org.spideruci.analysis.statik.sourcecode;
+package org.spideruci.analysis.statik.sourcecode.models;
 
 public class SourcefileData {
   public final String srcFileName;

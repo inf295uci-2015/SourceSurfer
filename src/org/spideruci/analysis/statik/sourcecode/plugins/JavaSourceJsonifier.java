@@ -2,9 +2,9 @@ package org.spideruci.analysis.statik.sourcecode.plugins;
 
 import java.util.ArrayList;
 
-import org.spideruci.analysis.statik.sourcecode.SourceLine;
 import org.spideruci.analysis.statik.sourcecode.SourceSurfingEventListener;
-import org.spideruci.analysis.statik.sourcecode.SourcefileData;
+import org.spideruci.analysis.statik.sourcecode.models.SourceLine;
+import org.spideruci.analysis.statik.sourcecode.models.SourcefileData;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
