@@ -134,6 +134,7 @@ public class SourceSurfer {
     Scanner confScanner = new Scanner(conf);
     while(confScanner.hasNextLine()) {
       String pluginName = confScanner.nextLine();
+      pluginName = pluginName.trim();
       if(pluginName == null || pluginName.isEmpty() 
           || pluginName.startsWith("#")) {
         continue;

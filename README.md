@@ -76,7 +76,7 @@ E.g.
 - Generate/Create Javadocs.
 - Write test cases.
 - Create a single executable.
-- Convert to maven project.
+- ~~Convert to maven project.~~
 - Improved plugin discovery.  
 - Explore individual conf files v. Seperate for each plugin.  
 - ~~Cmd line argument for source-file extensions.~~
