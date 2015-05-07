@@ -1,5 +1,7 @@
 # SourceSurfer
 
+[![Build Status](https://travis-ci.org/inf295uci-2015/SourceSurfer.svg?branch=master)](https://travis-ci.org/inf295uci-2015/SourceSurfer)
+
 I created this simple tool to scan source code directories, to be used in my own research. If you find this useful, feel free to use as you deem fit. I invite any suggestions, improvements, ideas, and pull requests. - Vijay
 
 ### Usage

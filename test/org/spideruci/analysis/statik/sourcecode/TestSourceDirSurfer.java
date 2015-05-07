@@ -12,15 +12,15 @@ import org.junit.Test;
 public class TestSourceDirSurfer {
   
   static File currentDir;
-  static File topJavaFile, topRubyFile, topDir, lowerJavaFile, lowerRubyFile, lowerDir;
+  static File topScalaFile, topRubyFile, topDir, lowerScalaFile, lowerRubyFile, lowerDir;
   
   @BeforeClass
   public static void setupClass() throws IOException {
     currentDir = new File(System.getProperty("user.dir"));
-    topJavaFile = new File(currentDir, "garbage.java"); topJavaFile.createNewFile();
+    topScalaFile = new File(currentDir, "garbage.scala"); topScalaFile.createNewFile();
     topRubyFile = new File(currentDir, "garbage.rb"); topRubyFile.createNewFile();
     topDir = new File(currentDir, "top-dir"); topDir.mkdir();
-    lowerJavaFile = new File(topDir, "garbage2.java"); lowerJavaFile.createNewFile();
+    lowerScalaFile = new File(topDir, "garbage2.scala"); lowerScalaFile.createNewFile();
     lowerRubyFile = new File(topDir, "garbage2.rb"); lowerRubyFile.createNewFile();
     lowerDir = new File(topDir, "lower-dir"); lowerDir.mkdir();
   }
@@ -29,9 +29,9 @@ public class TestSourceDirSurfer {
   public static void afterClass() {
     lowerDir.delete();
     lowerRubyFile.delete();
-    lowerJavaFile.delete();
+    lowerScalaFile.delete();
     topDir.delete();
-    topJavaFile.delete();
+    topScalaFile.delete();
     topRubyFile.delete();
   }
 
@@ -48,9 +48,9 @@ public class TestSourceDirSurfer {
   }
   
   @Test
-  public void nextShouldReturnNullWithScalaFileExtension() {
+  public void nextShouldReturnNullWithPythonFileExtension() {
     //given
-    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala");
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".python");
     
     //when
     File nextSourceFile = surfer.next();
@@ -72,28 +72,28 @@ public class TestSourceDirSurfer {
   }
   
   @Test
-  public void nextShouldReturnTopJavaFileWhenInvokedOnceWithJavaExtn() {
+  public void nextShouldReturnTopJavaFileWhenInvokedOnceWithScalaExtn() {
     //given
-    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".java");
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala");
     
     //when
     File nextSource = surfer.next();
     
     //then
-    assertEquals(topJavaFile, nextSource);
+    assertEquals(topScalaFile, nextSource);
   }
   
   @Test
-  public void nextShouldReturnLowerJavaFileWhenInvokedTwiceWithJavaExtn() {
+  public void nextShouldReturnLowerJavaFileWhenInvokedTwiceWithScalaExtn() {
     //given
-    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".java");
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala");
     
     //when
     surfer.next();
     File nextSource = surfer.next();
     
     //then
-    assertEquals(lowerJavaFile, nextSource);
+    assertEquals(lowerScalaFile, nextSource);
   }
   
   @Test
@@ -123,10 +123,24 @@ public class TestSourceDirSurfer {
     assertNull(thirdSourceFile);
   }
   
-  @Test 
-  public void nextShouldReturnNullWithLowerDirAsSourceAndJavaRubeExtns() {
+  @Test
+  public void nextShouldReturnNullWhenInvokedThirceWithScalaExtn() {
     //given
-    SourceDirSurfer surfer = SourceDirSurfer.init(lowerDir, ".java", ".rb");
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala");
+    
+    //when
+    surfer.next();
+    surfer.next();
+    File thirdSourceFile = surfer.next();
+    
+    //then
+    assertNull(thirdSourceFile);
+  }
+  
+  @Test 
+  public void nextShouldReturnNullWithLowerDirAsSourceAndScalaRubyExtns() {
+    //given
+    SourceDirSurfer surfer = SourceDirSurfer.init(lowerDir, ".scala", ".rb");
     
     //when
     File firstsource = surfer.next();
@@ -136,18 +150,69 @@ public class TestSourceDirSurfer {
   }
   
   @Test 
-  public void nextShouldRunTwiceReturnBeforeNullWithTopDirAsSourceAndJavaRubeExtns() {
+  public void nextShouldRunTwiceReturnBeforeNullWithTopDirAsSourceAndScalaRubyExtns() {
     //given
-    SourceDirSurfer surfer = SourceDirSurfer.init(topDir, ".java", ".rb");
-    int count = 0;
+    SourceDirSurfer surfer = SourceDirSurfer.init(topDir, ".scala", ".rb");
+    int runCount = 0;
+    int expectedRuns = 2;
     
     //when
     while(surfer.next() != null) {
-      count += 1;
+      runCount += 1;
     }
     
     //then
-    assertEquals(2, count);
+    assertEquals(expectedRuns, runCount);
   }
+  
+  @Test 
+  public void nextShouldRun4TimesReturnBeforeNullWithCurrentDirAsSourceAndScalaRubyExtns() {
+    //given
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala", ".rb");
+    int runCount = 0;
+    int expectedRuns = 4;
+    
+    //when
+    while(surfer.next() != null) {
+      runCount += 1;
+    }
+    
+    //then
+    assertEquals(expectedRuns, runCount);
+  }
+  
+  @Test 
+  public void nextShouldRun2TimesReturnBeforeNullWithCurrentDirAsSourceAndRubyExtns() {
+    //given
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".rb");
+    int runCount = 0;
+    int expectedRuns = 2;
+    
+    //when
+    while(surfer.next() != null) {
+      runCount += 1;
+    }
+    
+    //then
+    assertEquals(expectedRuns, runCount);
+  }
+  
+  @Test 
+  public void nextShouldRun2TimesReturnBeforeNullWithCurrentDirAsSourceAndScalaExtns() {
+    //given
+    SourceDirSurfer surfer = SourceDirSurfer.init(currentDir, ".scala");
+    int runCount = 0;
+    int expectedRuns = 2;
+    
+    //when
+    while(surfer.next() != null) {
+      runCount += 1;
+    }
+    
+    //then
+    assertEquals(expectedRuns, runCount);
+  }
+  
+
 
 }
