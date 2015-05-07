@@ -133,17 +133,18 @@ public class SourceSurfer {
     
     Scanner confScanner = new Scanner(conf);
     while(confScanner.hasNextLine()) {
-      String plugin = confScanner.nextLine();
-      if(plugin == null || plugin.isEmpty() || plugin.startsWith("#")) continue;
-      try {
-        Class<?> clazz = Class.forName(plugin);
-        listeners.add((AbstractSourceSurferPlugin) clazz.newInstance());
-      } catch (ClassNotFoundException | InstantiationException 
-          | IllegalAccessException e) {
-        System.err.println("Issue with the following plugin: " + plugin);
-        e.printStackTrace();
+      String pluginName = confScanner.nextLine();
+      if(pluginName == null || pluginName.isEmpty() 
+          || pluginName.startsWith("#")) {
         continue;
       }
+      
+      AbstractSourceSurferPlugin plugin = createPlugin(pluginName);
+      if(plugin != null) {
+        listeners.add(plugin);
+      }
+      
+      continue;
     }
     
     confScanner.close();
