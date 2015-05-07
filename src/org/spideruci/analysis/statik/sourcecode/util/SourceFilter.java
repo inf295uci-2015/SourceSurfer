@@ -39,6 +39,10 @@ public class SourceFilter implements FileFilter {
       
       String name = file.getName();
       for(String extn : extensions) {
+        if(extn == null || extn.isEmpty()) {
+          continue;
+        }
+        
         if(name.endsWith(extn)) {
           return true;
         }

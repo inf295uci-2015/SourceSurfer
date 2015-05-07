@@ -8,12 +8,13 @@ import org.spideruci.analysis.statik.sourcecode.util.SourceFilter;
 
 public class SourceDirSurfer {
   File root;
-  final ArrayList<File> filesToInspect;
-  final SourceFilter sourceFilter;
+  final private ArrayList<File> filesToInspect;
+  final private SourceFilter sourceFilter;
   
   public static SourceDirSurfer init(File root, String ... sourcefileExtentions) {
-    SourceDirSurfer x = new SourceDirSurfer(root).initializeTbd();
+    SourceDirSurfer x = new SourceDirSurfer(root);
     x.sourceFilter.initFilter(Arrays.asList(sourcefileExtentions));
+    x.initializeTbd();
     return x;
   }
   
@@ -47,7 +48,7 @@ public class SourceDirSurfer {
   }
   
     private SourceDirSurfer initializeTbd() {
-      File[] files = this.root.listFiles();
+      File[] files = this.root.listFiles(sourceFilter);
       
       for(File f : files) {
         if(f == null) continue;
