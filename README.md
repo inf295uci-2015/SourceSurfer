@@ -91,3 +91,4 @@ E.g.
 
 - Json-IO, for creating JSON dumps. -- [https://code.google.com/p/json-io/](https://code.google.com/p/json-io/)
 - Apache Commons CLI, for command line interface support. -- [https://commons.apache.org/proper/commons-cli](https://commons.apache.org/proper/commons-cli)
+- YamlBeans, for working with YAML based config files. -- [http://yamlbeans.sourceforge.net/](http://yamlbeans.sourceforge.net/)
