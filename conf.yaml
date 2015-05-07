@@ -1,0 +1,22 @@
+# use the document separator (three dashes `---`) to indicate different plugins.
+# if the object is not an instance of the `AbstractSourceSurferPlugin` class in the `org.spideruci.analysis.statik.sourcecode.plugins` then the object will be ignored.
+#empty yaml documents (like this one) will be ignored
+---
+# declare a plugin as a single key, with no value.
+# this key will be used as the plugin name to create the plugin instance.
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourcePrinter:
+---
+# declare a plugin as multiple keys, with no values.
+# these keys will be used as the plugin names to create plugin instances.
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourcePrinter:
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourceJsonifier:
+---
+# declaring the plugin as a string
+"org.spideruci.analysis.statik.sourcecode.plugins.JavaSourceJsonifier"
+---
+# declaring the plugin as an object
+!org.spideruci.analysis.statik.sourcecode.plugins.JavaSourceJsonifier {}
+---
+# declaring a plugin as key-value pair(s). 
+# The value of this key will be read in as an object and will be used to invoke the `AbstractSourceSurferPlugin#init(object)` method of the plugin.
+org.spideruci.analysis.statik.sourcecode.plugins.JavaSourcePrinter: null

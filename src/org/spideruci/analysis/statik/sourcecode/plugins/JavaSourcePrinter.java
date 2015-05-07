@@ -1,10 +1,9 @@
 package org.spideruci.analysis.statik.sourcecode.plugins;
 
-import org.spideruci.analysis.statik.sourcecode.SourceSurfingEventListener;
 import org.spideruci.analysis.statik.sourcecode.models.SourceLine;
 import org.spideruci.analysis.statik.sourcecode.models.SourcefileData;
 
-public class JavaSourcePrinter implements SourceSurfingEventListener {
+public class JavaSourcePrinter extends AbstractSourceSurferPlugin {
 
   private String javafileName;
   

@@ -2,13 +2,12 @@ package org.spideruci.analysis.statik.sourcecode.plugins;
 
 import java.util.ArrayList;
 
-import org.spideruci.analysis.statik.sourcecode.SourceSurfingEventListener;
 import org.spideruci.analysis.statik.sourcecode.models.SourceLine;
 import org.spideruci.analysis.statik.sourcecode.models.SourcefileData;
 
 import com.cedarsoftware.util.io.JsonWriter;
 
-public class JavaSourceJsonifier implements SourceSurfingEventListener {
+public class JavaSourceJsonifier extends AbstractSourceSurferPlugin {
 
   @SuppressWarnings("unused")
   private String sourcefileName = null;
@@ -34,7 +33,6 @@ public class JavaSourceJsonifier implements SourceSurfingEventListener {
   @Override
   public void startListening() {
     // TODO Auto-generated method stub
-    
   }
 
   @Override
@@ -42,5 +40,4 @@ public class JavaSourceJsonifier implements SourceSurfingEventListener {
     // TODO Auto-generated method stub
     
   }
-
 }

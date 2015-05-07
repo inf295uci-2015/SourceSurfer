@@ -1,2 +1,4 @@
+# a simple file that lists out the plugin names used to create plugins during runtime.
+# each line has a single plguin name.
 org.spideruci.analysis.statik.sourcecode.plugins.JavaSourcePrinter
 org.spideruci.analysis.statik.sourcecode.plugins.JavaSourceJsonifier

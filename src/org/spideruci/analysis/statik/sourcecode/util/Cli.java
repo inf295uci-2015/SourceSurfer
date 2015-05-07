@@ -74,7 +74,8 @@ public class Cli {
   public void printHelp() {
     HelpFormatter formatter = new HelpFormatter();
     formatter.setWidth(100);
-    formatter.printHelp( " ", options );
+    formatter.printHelp("java -cp .:<dependencies> "
+        + "org.spideruci.analysis.statik.sourcecode.SourceSurfer", options );
   }
   
 
