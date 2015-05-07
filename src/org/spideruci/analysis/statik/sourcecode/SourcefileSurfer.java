@@ -3,36 +3,40 @@ package org.spideruci.analysis.statik.sourcecode;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InvalidObjectException;
+import java.io.Reader;
 import java.util.Scanner;
 
 import org.spideruci.analysis.statik.sourcecode.models.SourceLine;
 
 public class SourcefileSurfer {
   
-  final private File sourcefile;
   private Scanner scanner;
   private int linecount;
   
-  private SourcefileSurfer(File file) {
-    sourcefile = file;
+  private SourcefileSurfer(Scanner scanner) {
+    this.scanner = scanner;
     linecount = 0;
   }
   
-  public static final SourcefileSurfer init(final File file) throws InvalidObjectException, FileNotFoundException {
+  private static final Scanner initFileScanner(final File file) 
+      throws InvalidObjectException, FileNotFoundException {
     if(file == null || file.isDirectory()) {
       throw new InvalidObjectException("File object is either null, or points to a directory.");
     }
     
-    SourcefileSurfer x = new SourcefileSurfer(file).init();
-    
-    
+    return new Scanner(file);
+  }
+  
+  public static final SourcefileSurfer init(final Reader reader) {
+    SourcefileSurfer x = new SourcefileSurfer(new Scanner(reader));
     return x;
   }
   
-  public SourcefileSurfer init() throws FileNotFoundException {
-    this.scanner = new Scanner(this.sourcefile);
-    linecount = 0;
-    return this;
+  public static final SourcefileSurfer init(final File file) 
+      throws InvalidObjectException, FileNotFoundException {
+    Scanner scanner = initFileScanner(file);
+    SourcefileSurfer x = new SourcefileSurfer(scanner);
+    return x;
   }
   
   public boolean hasNext() {
