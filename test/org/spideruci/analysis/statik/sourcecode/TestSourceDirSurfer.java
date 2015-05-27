@@ -34,6 +34,14 @@ public class TestSourceDirSurfer {
     topScalaFile.delete();
     topRubyFile.delete();
   }
+  
+  /**
+   * this is a test for tacoco.
+   */
+  @Test(expected = NullPointerException.class)
+  public void shouldThrowNullException() {
+    throw new NullPointerException();
+  }
 
   @Test
   public void nextShouldReturnNullWithNoSpecifiedFileExtension() {
